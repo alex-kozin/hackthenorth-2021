@@ -1,50 +1,45 @@
-// // Import the Express module
-// var express = require('express');
+const path = require('path')
+const express = require('express')
+const app = require('express')();
+const server = require('http').createServer(app);
+const options = { /* ... */ };
+const io = require('socket.io')(server, options);
 
-// // Import the 'path' module (packaged with Node.js)
-// var path = require('path');
+const log = console.log
 
-// // Create a new instance of Express
-// var app = express();
+let availableUserSocketIds = {}
 
-// // Import the Anagrammatix game file.
-// var agx = require('./game');
+io.on('connection', socket => { 
+    log(`User connected on ${socket.id}`)
+    availableUserSocketIds[socket.id] = socket.id
+    log("socketIds", availableUserSocketIds)
+    socket.emit('initUserList', availableUserSocketIds)
+    socket.broadcast.emit('userListUpdate', socket.id)
 
-// // Create a simple Express application
-// app.configure(function() {
-//     // Turn down the logging activity
-//     app.use(express.logger('dev'));
+    // 1 - you're displayed when you connect
+    // 2 - you're displayed when you hit Start
+    // 3 - you get the list of all people connected when you connect + new people when they connect
 
-//     // Serve static html, js, css, and image files from the 'public' directory
-//     app.use(express.static(path.join(__dirname,'public')));
-// });
+    socket.on('startGame', () => {
+        log("server: startGame emit")
+        socket.emit('startGame')
+    })
 
-// // Create a Node.js based http server on port 8080
-// var server = require('http').createServer(app).listen(process.env.PORT || 8080);
+    socket.on('userListUpdate', socketId => {
+        socket.emit('userListUpdate', socketId)
+    })
 
-// // Create a Socket.IO server and attach it to the http server
-// var io = require('socket.io').listen(server);
-
-// // Reduce the logging output of Socket.IO
-// io.set('log level',1);
-
-// // Listen for Socket.IO Connections. Once connected, start the game logic.
-// io.sockets.on('connection', function (socket) {
-//     //console.log('client connected');
-//     agx.initGame(io, socket);
-// });
-
-app.get('/', async (req, res) => {
-  res.send('<h1>Hello world</h1>');
-});
-
-app.get('/sample', async (req, res) => {
-  res.render("./client/index.html");
-});
-
-// === Server Listening ===
-const port = process.env.PORT || 3000;
-app.listen(port, () =>{
-  log(`server running http://localhost:${port}`)
-  log(`press CTRL+C to stop server`)
+    socket.on('clientDisconnect', socketId => {
+      log(`${socket.id} remove from availableUserSocketIds.`)
+      delete availableUserSocketIds[socketId]
+    })
 })
+
+app.use(express.static('public'))
+app.get('/', async (req, res) => {
+    res.sendFile(path.join(__dirname + '/index.html'))
+});
+
+server.listen(3000, () => {
+    log('go to http://localhost:3000')
+});
