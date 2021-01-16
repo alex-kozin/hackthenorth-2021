@@ -4,7 +4,7 @@ import "../styles/playerHand.css";
 
 const PlayerHand = ({active, cards, onSelect}) => {
 
-    const cardComponents = cards.map(({name, image, price, stars, reviews}) => 
+    const cardComponents = cards.map(({name, image, price, stars, reviews}, index) => 
     {return <Card 
             name={name}
             image={image} 
@@ -12,7 +12,7 @@ const PlayerHand = ({active, cards, onSelect}) => {
             stars={stars} 
             reviews={reviews} 
             active={active} 
-            onSelect={() => onSelect({name, image, price, stars, reviews})}/>})
+            onSelect={() => onSelect(index)}/>})
 
 
     return (
