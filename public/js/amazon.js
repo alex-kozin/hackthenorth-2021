@@ -27,9 +27,13 @@ getRandomProduct = async () => {
         let products = await amazon.products({ keyword: randomKeyword(7), number: 10, country: randomCountry }).then(
             result => result.result
         )
-        console.log(product.price)
-        console.log(product.score)
-        console.log(product.reviews)
+
+        products.forEach(product => {
+            console.log(product.price)
+            console.log(product.score)
+            console.log(product.reviews)
+        });
+        
         return products
     } catch (error) {
         console.log(error)
