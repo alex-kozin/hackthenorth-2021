@@ -11,18 +11,40 @@ let availableUserSocketIds = {}
 
 io.on('connection', socket => { 
     log(`User connected on ${socket.id}`)
-    availableUserSocketIds[socket.id] = socket.id
-    log("socketIds", availableUserSocketIds)
-    socket.emit('initUserList', availableUserSocketIds)
-    socket.broadcast.emit('userListUpdate', socket.id)
+    
+    socket.on('findPlayer', (username, socketId) => {
+        log(`server: findPlayer ${socketId}`)
 
-    // 1 - you're displayed when you connect
-    // 2 - you're displayed when you hit Start
-    // 3 - you get the list of all people connected when you connect + new people when they connect
+        availableUserSocketIds[socketId] = username
 
-    socket.on('startGame', () => {
-        log("server: startGame emit")
-        socket.emit('startGame')
+        if (Object.keys(availableUserSocketIds).length == 1){
+            socket.emit('WaitingOtherPlayer')
+            return
+        }
+
+        log("[BEFORE MATCHING] socketIds", availableUserSocketIds)
+        // socket.emit('initUserList', availableUserSocketIds)
+
+        let isFound = true
+        let otherPlayerId;
+        while(isFound){
+            for (otherPlayerId in availableUserSocketIds) {
+                // check if the property/key is defined in the object itself, not in parent
+                if (otherPlayerId != socketId) {  
+                    log(`${username} is matched with ${availableUserSocketIds[otherPlayerId]}`);
+                    isFound = false
+                    break
+                }
+            }
+        }
+
+        socket.emit('finishMatching', otherPlayerId, availableUserSocketIds[otherPlayerId])
+        delete availableUserSocketIds[socketId]
+        delete availableUserSocketIds[otherPlayerId]
+        log("[AFTER MATCHING] socketIds", availableUserSocketIds)
+
+        // socket.broadcast.emit('userListUpdate', socket.id)
+        // socket.emit('startGame')
     })
 
     socket.on('userListUpdate', socketId => {
