@@ -44,13 +44,11 @@ io.on('connection', socket => {
         log("[AFTER MATCHING] socketIds", availableUserSocketIds)
     })
 
-    socket.on('clientDisconnect', () => {
-      log(`${socket.id} remove from availableUserSocketIds.`)
-      availableUserSocketIds = deleteKey(availableUserSocketIds, socket.id)
-      //Found 2 problems: 1) strings are immutable, 2) client doesn't always signal disconnect, solution: registering users with own IDs
-      // off for quick lunch
-      
-      console.log(availableUserSocketIds)
+    socket.on('disconnect', () => {
+        log(`${socket.id} disconnected.`)
+        delete availableUserSocketIds[socket.id]
+        log(`${socket.id} remove from availableUserSocketIds.`)
+        log(availableUserSocketIds)
     })
 })
 

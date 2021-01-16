@@ -40,11 +40,6 @@ socket.on('WaitingOtherPlayer', () => {
     matching.appendChild(title)
 })
 
-socket.on('disconnect', () => {
-    log(`${socket.id} disconnected.`)
-    socket.emit('clientDisconnect', socket.id)
-})
-
 // === JS functions ===
 
 startButton.addEventListener('click', () => {
