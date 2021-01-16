@@ -22,16 +22,19 @@ getRandomProduct = async () => {
         // Collect 50 products from a keyword 'xbox one'
         // Default country is US
         console.log(randomKeyword(7))
-        console.log(countries[randomInt(0, countries.length)].country_code)
-        let randomCountry = countries[randomInt(0, countries.length)].country_code
+        //console.log(countries[randomInt(0, countries.length)].country_code)
+        let randomCountry = 'US' //countries[randomInt(0, countries.length)].country_code
         let products = await amazon.products({ keyword: randomKeyword(7), number: 10, country: randomCountry }).then(
             result => result.result
         )
 
         products.forEach(product => {
+            console.log(product.title)
+            console.log(product.thumbnail)
             console.log(product.price)
             console.log(product.score)
             console.log(product.reviews)
+            console.log("-----------------------------------------------------")
         });
         
         return products
