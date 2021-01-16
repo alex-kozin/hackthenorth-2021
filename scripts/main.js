@@ -1,7 +1,7 @@
 function createDeck()
 {
-    deck = new Array();
-    for (var i = 0 ; i < 10; i++)
+    deck = new Array()
+    for (var i = 0  i < 10 i++)
     {
         var pricePoints = randomInt(1, 5)
         var ratingPoints = randomInt(1, 5)
@@ -20,9 +20,9 @@ function createDeck()
 
 function renderDeck(deck)
 {
-      document.getElementById("deck").innerHTML = "";
+      document.getElementById("deck").innerHTML = ""
 
-	for(let i = 0; i < deck.length; i++)
+	for(let i = 0 i < deck.length i++)
 	{   
 		let price = document.createElement("div")
 		let rating = document.createElement("div")
@@ -50,10 +50,11 @@ function renderDeck(deck)
 
 
 
+
 function randomInt(min, max) {
-    min = Math.ceil(min);
-    max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    min = Math.ceil(min)
+    max = Math.floor(max)
+    return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 
