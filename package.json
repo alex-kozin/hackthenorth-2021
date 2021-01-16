@@ -3,6 +3,7 @@
     "version": "0.0.1",
     "description": "Amazon Battle Cards Game",
     "dependencies": {
+        "amazon-buddy": "^2.2.26",
         "express": "^4.17.1",
         "socket.io": "^3.1.0"
     },

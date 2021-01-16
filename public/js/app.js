@@ -42,6 +42,7 @@ socket.on('WaitingOtherPlayer', () => {
 
 socket.on('disconnect', () => {
     log(`${socket.id} disconnected.`)
+    socket.emit('clientDisconnect', socket.id)
 })
 
 // === JS functions ===
