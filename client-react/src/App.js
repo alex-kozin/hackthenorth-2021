@@ -13,7 +13,7 @@ const CARDS = [
   {name: "Vacuum", price: 100, stars: 4.7, reviews:722, image:TEST_IMAGE},
   {name: "Vacuum", price: 100, stars: 4.7, reviews:722, image:TEST_IMAGE}
 ]
-function App() {
+const App = () => {
 
   const [selectedBattle, setSelectedBattle] = useState("")
   const [selectionActive, setSelectionActive] = useState(true)
