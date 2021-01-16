@@ -31,6 +31,8 @@ const App = () => {
   const [selectionActive, setSelectionActive] = useState(true)
   const [handActive, setHandActive] = useState(false)
   const [cardSelected, setCardSelected] = useState({})
+  const [opponentCard, setOpponentCard] = useState({})
+  
 
   const onSelectBattle = (selection) => {
     setSelectedBattle(selection);
