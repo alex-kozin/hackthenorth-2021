@@ -23,14 +23,13 @@ io.on('connection', socket => {
         }
 
         log("[BEFORE MATCHING] socketIds", availableUserSocketIds)
-        // socket.emit('initUserList', availableUserSocketIds)
-
         let isNotFound = true
         let otherPlayerId;
         while(isNotFound){
             for (otherPlayerId in availableUserSocketIds) {
                 // check if the property/key is defined in the object itself, not in parent
                 if (otherPlayerId != socketId) {  
+                    socket.join(otherPlayerId)
                     log(`${username} is matched with ${availableUserSocketIds[otherPlayerId]}`);
                     isNotFound = false
                     break
@@ -38,6 +37,7 @@ io.on('connection', socket => {
             }
         }
 
+        socket.to(otherPlayerId).emit('finishMatching', socketId, availableUserSocketIds[socketId])
         socket.emit('finishMatching', otherPlayerId, availableUserSocketIds[otherPlayerId])
         delete availableUserSocketIds[socketId]
         delete availableUserSocketIds[otherPlayerId]
