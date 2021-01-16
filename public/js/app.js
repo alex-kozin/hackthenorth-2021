@@ -20,9 +20,9 @@ socket.on('startGame', () => {
 })
 
 socket.on('initUserList', userList => {
-    userList.forEach(socketId => {
-        events.appendChild(newItem(socketId))
-    });
+    for (const [k, v] of Object.entries(userList)) {
+        events.appendChild(newItem(v))
+    }
 })
 
 socket.on('userListUpdate', userId => {
@@ -31,6 +31,7 @@ socket.on('userListUpdate', userId => {
 
 socket.on('disconnect', () => {
     log(`${socket.id} disconnected.`)
+    socket.emit('clientDisconnect', socket.id)
 })
 
 // === JS functions ===
