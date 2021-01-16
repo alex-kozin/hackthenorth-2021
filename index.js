@@ -42,13 +42,6 @@ io.on('connection', socket => {
         delete availableUserSocketIds[socketId]
         delete availableUserSocketIds[otherPlayerId]
         log("[AFTER MATCHING] socketIds", availableUserSocketIds)
-
-        // socket.broadcast.emit('userListUpdate', socket.id)
-        // socket.emit('startGame')
-    })
-
-    socket.on('userListUpdate', socketId => {
-        socket.emit('userListUpdate', socketId)
     })
 
     socket.on('clientDisconnect', socketId => {

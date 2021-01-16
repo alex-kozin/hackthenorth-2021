@@ -20,17 +20,6 @@ socket.on('startGame', () => {
     socket.emit('userListUpdate', socket.id)
 })
 
-
-// socket.on('initUserList', userList => { // Debugging Purposes
-//     userList.forEach(socketId => {
-//         events.appendChild(newItem(socketId))
-//     });
-// })
-
-// socket.on('userListUpdate', userId => {
-//     events.appendChild(newItem(userId))
-// })
-
 socket.on('finishMatching', (p2Id, p2Username) => {
     removeAllChildNodes(matching)
 
@@ -39,6 +28,7 @@ socket.on('finishMatching', (p2Id, p2Username) => {
     title.appendChild(text)
     matching.appendChild(title)
     // run play game function
+    alert("Ready to play!")
 })
 
 socket.on('WaitingOtherPlayer', () => {
@@ -48,7 +38,6 @@ socket.on('WaitingOtherPlayer', () => {
     let text = document.createTextNode("Waiting for other players")
     title.appendChild(text)
     matching.appendChild(title)
-    // run play game function
 })
 
 socket.on('disconnect', () => {
