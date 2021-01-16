@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap" );
+
+.username{
+    font-family: 'Kanit', sans-serif;
+    font-size: 15pt;
+    margin: 0px 5px 0px 5px;
+}
+
+.vs{
+    font-family: 'Kanit', sans-serif;
+    font-size: 15pt;
+    margin: 0px 5px 0px 5px;
+}
+
+.opponent{
+    font-family: 'Kanit', sans-serif;
+    font-size: 15pt;
+    margin: 0px 5px 0px 5px;
+}
+
+.header-container{
+    display: flex;
+    flex-direction: row;
+}
+
