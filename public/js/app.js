@@ -6,7 +6,7 @@ let socket = io();
 const startingSection = document.querySelector('.starting-section')
 let startButton = document.getElementById('startButton')
 let events = document.getElementById('events')
-let matching = document.getElementById('matching')
+let matching = document.querySelector('.matching')
 
 // === Client Sockets ===
 
@@ -32,7 +32,7 @@ socket.on('startGame', () => {
 // })
 
 socket.on('finishMatching', (p2Id, p2Username) => {
-    // removeAllChildNodes(matching)
+    removeAllChildNodes(matching)
 
     let title = document.createElement("h3");
     let text = document.createTextNode("You are matched with " + p2Username)
@@ -42,7 +42,7 @@ socket.on('finishMatching', (p2Id, p2Username) => {
 })
 
 socket.on('WaitingOtherPlayer', () => {
-    // removeAllChildNodes(matching)
+    removeAllChildNodes(matching)
 
     let title = document.createElement("h3");
     let text = document.createTextNode("Waiting for other players")
