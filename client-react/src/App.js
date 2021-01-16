@@ -1,4 +1,6 @@
 import React, {useState, useEffect}from 'react';
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://127.0.0.1:3001";
 
 import {BattleSelection} from "./components/BattleSelection";
 import {PlayerHand} from "./components/PlayerHand";
@@ -14,6 +16,14 @@ const CARDS = [
   {name: "Vacuum", price: 100, stars: 4.7, reviews:722, image:TEST_IMAGE}
 ]
 const App = () => {
+  const [response, setResponse] = useState("");
+
+  useEffect(() => {
+    const socket = socketIOClient(ENDPOINT);
+    socket.on("FromAPI", data => {
+      setResponse(data);
+    });
+  }, []);
 
   const [selectedBattle, setSelectedBattle] = useState("")
   const [selectionActive, setSelectionActive] = useState(true)
@@ -34,6 +44,7 @@ const App = () => {
 
   return (
     <div>
+      <p>Response: {response}</p>
       <BattleSelection active={selectionActive} selection={selectedBattle} onSelect={onSelectBattle}/>
       <PlayerHand active={handActive} cards={CARDS} onSelect={onSelectCard}/>
     </div>
