@@ -4,10 +4,12 @@ const ENDPOINT = "http://127.0.0.1:3001";
 
 import {BattleSelection} from "./components/BattleSelection";
 import {PlayerHand} from "./components/PlayerHand";
+import {VersusHeader} from "./components/VersusHeader";
 
 import './App.css';
 
 const TEST_IMAGE = "https://images-na.ssl-images-amazon.com/images/I/71XThblib4L._AC_SX679_.jpg";
+
 const CARDS = [
   {name: "Vacuum", price: 100, stars: 4.7, reviews:722, image:TEST_IMAGE},
   {name: "Vacuum", price: 100, stars: 4.7, reviews:722, image:TEST_IMAGE},
@@ -45,6 +47,7 @@ const App = () => {
   return (
     <div>
       <p>Response: {response}</p>
+      <VersusHeader username={"USERNAME"} opponentName={"OPPONENT"}/>
       <BattleSelection active={selectionActive} selection={selectedBattle} onSelect={onSelectBattle}/>
       <PlayerHand active={handActive} cards={CARDS} onSelect={onSelectCard}/>
     </div>
