@@ -1,0 +1,54 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@400&display=swap" );
+
+
+.button-text{
+    font-family: 'Kanit', sans-serif;
+    font-size: 15pt;
+    color: white;
+}
+
+.button-static-box{
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    margin: 10px;
+    border: none
+}
+
+.button-box{
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    margin: 10px;
+    border: none
+}
+
+.button-box:hover{
+    cursor: pointer;
+}
+
+.button-box:disabled:hover{
+    cursor: default;
+}
+
+.button-box:active{
+    opacity: 0.7;
+}
+
+.button-box:disabled{
+    opacity: 0.5;
+}
+
+.battle-select-choices{
+    display: flex;
+    flex-direction: row;
+}
+
+.battle-select-title{
+    font-family: 'Kanit', sans-serif;
+    font-size: 24pt;
+}
+
+.battle-select-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
