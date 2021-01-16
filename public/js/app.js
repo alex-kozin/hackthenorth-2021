@@ -6,6 +6,7 @@ let socket = io();
 const startingSection = document.querySelector('.starting-section')
 let startButton = document.getElementById('startButton')
 let events = document.getElementById('events')
+let matching = document.querySelector('.matching')
 
 // === Client Sockets ===
 
@@ -19,14 +20,24 @@ socket.on('startGame', () => {
     socket.emit('userListUpdate', socket.id)
 })
 
-socket.on('initUserList', userList => {
-    for (const [k, v] of Object.entries(userList)) {
-        events.appendChild(newItem(v))
-    }
+socket.on('finishMatching', (p2Id, p2Username) => {
+    removeAllChildNodes(matching)
+
+    let title = document.createElement("h3");
+    let text = document.createTextNode("You are matched with " + p2Username)
+    title.appendChild(text)
+    matching.appendChild(title)
+    // run play game function
+    alert("Ready to play!")
 })
 
-socket.on('userListUpdate', userId => {
-    events.appendChild(newItem(userId))
+socket.on('WaitingOtherPlayer', () => {
+    removeAllChildNodes(matching)
+
+    let title = document.createElement("h3");
+    let text = document.createTextNode("Waiting for other players")
+    title.appendChild(text)
+    matching.appendChild(title)
 })
 
 socket.on('disconnect', () => {
@@ -37,8 +48,9 @@ socket.on('disconnect', () => {
 // === JS functions ===
 
 startButton.addEventListener('click', () => {
-    log(`client ${socket.id}: Game started`)
-    socket.emit('startGame')
+    log(`client ${socket.id}: Finding player...`)
+    const username = document.querySelector("#username").value
+    socket.emit('findPlayer', username, socket.id)
 })
 
 const hideStartButton = () => {
@@ -52,3 +64,8 @@ const newItem = (content) => {
   return item
 };
 
+const removeAllChildNodes = async (parent) => {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+}
